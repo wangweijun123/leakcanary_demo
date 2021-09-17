@@ -14,10 +14,12 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        BaseApplication application = (BaseApplication) getApplication();
-        application.addCurrentActivity(this);
+        /*BaseApplication application = (BaseApplication) getApplication();
+        application.addCurrentActivity(this);*/
 
 //        startThread();
+
+        doTask();
     }
 
     public void click(View view) {
@@ -25,10 +27,27 @@ public class SecondActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    TaskManager.Callback callback = new TaskManager.Callback() {
+        @Override
+        public void onSuccess() {
+            Log.i("wangweijun", "onSuccess");
+        }
+
+        @Override
+        public void onFailed() {
+            Log.i("wangweijun", "onFailed");
+        }
+    };
+    private void doTask() {
+        new TaskManager().doTask(callback);
+    }
+
+
+    /*Thread thread;
     private void startThread() {
         // 对象是永久泄漏, 还是只有这一段时间
         // 匿名内部类, 拥有外部类的引用
-        new Thread(new Runnable() {
+        thread =  new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -39,11 +58,16 @@ public class SecondActivity extends AppCompatActivity {
                 }
                 Log.i("wangweijun", "睡醒了");
             }
-        }).start();
-    }
+        });
+        thread.start();
+    }*/
 
     @Override
     protected void onDestroy() {
+        /*if (thread!= null) {
+            thread.interrupt();;
+        }*/
+        callback = null;
         super.onDestroy();
         // 但是对象不一定会被释放，其实我们肯定是希望回收
     }
