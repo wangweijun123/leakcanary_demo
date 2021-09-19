@@ -38,6 +38,7 @@ public class TestWeakRef {
 
 	@Test
 	public void test() throws InterruptedException {
+		// vm option -Xms1m  设置java堆大小哈，为了测试
 		MyObject obj=new MyObject();
 		weakQueue = new ReferenceQueue<MyObject>();
 		WeakReference<MyObject> weakRef=new WeakReference<MyObject>(obj,weakQueue);

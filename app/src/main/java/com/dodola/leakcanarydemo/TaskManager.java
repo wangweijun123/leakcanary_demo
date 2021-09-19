@@ -10,7 +10,7 @@ public class TaskManager {
     }
 
     public void doTask(Callback callback) {
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -24,6 +24,8 @@ public class TaskManager {
                     callback.onSuccess();
                 }
             }
-        }).start();
+        });
+        t.setName("taskxxxx");
+         t.start();
     }
 }

@@ -7,6 +7,10 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 public class SecondActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +24,30 @@ public class SecondActivity extends AppCompatActivity {
 //        startThread();
 
         doTask();
+
+
+//        getAllStackTrace();
+    }
+
+    private void getAllStackTrace() {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // 可以获取到进程中的所有线程，以及每个线程的调用stack
+        Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
+        Set<Map.Entry<Thread, StackTraceElement[]>> entries = allStackTraces.entrySet();
+        Iterator<Map.Entry<Thread, StackTraceElement[]>> iterator = entries.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Thread, StackTraceElement[]> next = iterator.next();
+            Thread key = next.getKey();
+            StackTraceElement[] value = next.getValue();
+            Log.i("wangweijun", "key = " + key.getName());
+            for (int i = 0; i < value.length; i++) {
+                Log.i("wangweijun", value[i].toString());
+            }
+        }
     }
 
     public void click(View view) {
