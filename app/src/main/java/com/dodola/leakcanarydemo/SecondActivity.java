@@ -94,6 +94,7 @@ public class SecondActivity extends AppCompatActivity {
     protected void onDestroy() {
         /*if (thread!= null) {
             thread.interrupt();;
+            thread = null;
         }*/
         callback = null;
         super.onDestroy();
